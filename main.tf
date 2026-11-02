@@ -40,3 +40,49 @@ resource "google_compute_subnetwork" "vpc_subnet" {
     ip_cidr_range = each.value.service_cidr
   }
 }
+
+resource "google_compute_firewall" "k8s_allow_internal" {
+  name = "epxhsid-k8s-allow-internal"
+  network = google_compute_network.vpc_network.id
+  direction = "INGRESS"
+
+  source_ranges = [
+    "10.10.1.0/24",
+    "10.10.2.0/24",
+    "10.10.3.0/24",
+
+    "172.16.0.0/18",
+    "172.16.64.0/18",
+    "172.16.128.0/18",
+  ]
+
+  target_tags = ["k8s-node"]
+
+  allow {
+    protocol = "tcp"
+    ports = ["0-65535"]
+  }
+
+  allow {
+    protocol = "udp"
+    ports = ["0-65535"]
+  }
+
+  allow {
+    protocol = "icmp"
+  }
+}
+
+resource "google_compute_firewall" "allow_iap_ssh" {
+  name = "epxhsid-allow-iap-ssh"
+  network = google_compute_network.vpc_network.id
+  direction = "INGRESS"
+
+  source_ranges = ["35.235.240.0/20"]
+  target_tags = ["k8s-node"]
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+}
