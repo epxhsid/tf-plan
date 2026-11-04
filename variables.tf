@@ -15,3 +15,8 @@ variable "zone" {
   description = "The zone in which to provision resources."
   default     = "asia-southeast1-a"
 }
+
+variable "admin_email" {
+  type        = string
+  description = "The email address of the admin user."
+}
