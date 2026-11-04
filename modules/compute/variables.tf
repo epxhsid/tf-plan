@@ -7,6 +7,11 @@ variable "instances" {
   }))
 }
 
+variable "service_account_email" {
+  type        = string
+  description = "Service account attached to each Kubernetes node."
+}
+
 variable "machine_type" {
   description = "machine type to use for the instances."
   type        = string

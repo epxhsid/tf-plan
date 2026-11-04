@@ -17,8 +17,13 @@ resource "google_compute_instance" "node" {
     enable-oslogin = "TRUE"
   }
 
-  name = each.key
-  zone = each.value.zone
+  service_account {
+    email  = var.service_account_email
+    scopes = ["https://www.googleapis.com/auth/cloud-platform"]
+  }
+
+  name         = each.key
+  zone         = each.value.zone
   machine_type = var.machine_type
-  tags = ["k8s-node"]
+  tags         = ["k8s-node"]
 }
