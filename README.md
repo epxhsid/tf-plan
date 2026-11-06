@@ -1,4 +1,5 @@
-# Terraform template for bootstrapping GCP projects. It should currently provision:
+# Terraform template for bootstrapping GCP projects. 
+It should currently provision:
 
 - A custom VPC network and environment subnetworks
 - Kubernetes-oriented secondary IP ranges
